@@ -6,22 +6,28 @@ const ChatForm = ({ chatHistory, setChatHistory, generateBotResponse }) => {
   const handleFormSubmit = (e) => {
     e.preventDefault();
     const userMessage = inputRef.current.value.trim();
-    if (!userMessage) return;
+    if (!userMessage) {
+      return;
+    }
 
     inputRef.current.value = ""; // Clear input
-    setChatHistory((history) => [
-      ...history,
-      { role: "user", text: userMessage },
-    ]);
-
-    // Simulate bot response
-    setTimeout(() => {
-      setChatHistory((history) => [
+    setChatHistory((history) => {
+      const updatedHistory = [
         ...history,
-        { role: "model", text: "Thinking ..." },
-      ]);
-      generateBotResponse([...chatHistory, { role: "user", text: userMessage }]);
-    }, 600);
+        { role: "user", text: userMessage },
+      ];
+
+      // Simulate bot response
+      setTimeout(() => {
+        setChatHistory((currentHistory) => [
+          ...currentHistory,
+          { role: "model", text: "Thinking ..." },
+        ]);
+        generateBotResponse(updatedHistory);
+      }, 600);
+
+      return updatedHistory; // Ensure the state is updated
+    });
   };
 
   return (

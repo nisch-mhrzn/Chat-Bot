@@ -154,7 +154,7 @@ body {
   font-size: 1rem;
   line-height: 1.5;
   word-wrap: break-word; /* Ensure long words wrap */
-  white-space: normal; /* Allow normal wrapping of text */
+  white-space: pre-wrap; /* Allow normal wrapping of text */
 }
 
 .chat-footer {
