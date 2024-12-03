@@ -1,10 +1,11 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import ChatbotIcon from './components/ChatbotIcon';
 import ChatForm from './components/ChatForm';
 import ChatMessage from './components/ChatMessage';
 
 const App = () => {
   const [chatHistory, setChatHistory] = useState([]);
+  const chatBodyRef =useref();
   const updateHistory= (text)=>{
     setChatHistory(prev => [...prev.filter(msg =>msg.text !=="Thinking ..."),{role:"model",text}])
   }
@@ -35,7 +36,9 @@ const App = () => {
       console.error('Error generating bot response:', error);
     }
   };
-
+useEffect(() =>{
+chatBodyRef.current.scrollTo({top: chatBodyRef.current.scrollHeight,behavior: 'smooth'});
+},[chatHistory]);
   return (
     <div className="container">
       <div className="chatbot-popup">
@@ -47,7 +50,8 @@ const App = () => {
           </div>
           <button className="material-symbols-outlined">keyboard_arrow_down</button>
         </div>
-        <div className="chat-body">
+        {/* chatbbody */}
+        <div ref={chatBodyRef} className="chat-body">
           <div className="message bot-message">
             <ChatbotIcon />
             <p className="message-text">Hi! How can I assist you today?</p>
